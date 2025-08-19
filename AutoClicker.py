@@ -41,7 +41,7 @@ TRANSLATIONS = {
         'close_button': "Close",
         # Tabs
         'tab_autoclicker': "AutoClicker",
-        'tab_antiafk': "Anti AFK",
+        'tab_antiafk': "Anti-AFK",
         'tab_settings': "Settings",
         # Status
         'status_stopped': "Status: STOPPED",
@@ -401,6 +401,7 @@ class MainWindow(QtWidgets.QMainWindow):
     sig_stop_clicking = QtCore.pyqtSignal()
     sig_toggle_armed = QtCore.pyqtSignal()
     sig_trigger_action = QtCore.pyqtSignal()
+    sig_toggle_afk = QtCore.pyqtSignal() # <<< FIX 1: ADDED SIGNAL
     
     # --- Initialization ---
     def __init__(self):
@@ -433,6 +434,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sig_stop_clicking.connect(self.on_stop_clicking)
         self.sig_toggle_armed.connect(self.on_toggle_armed)
         self.sig_trigger_action.connect(self.on_trigger_action)
+        self.sig_toggle_afk.connect(self.on_toggle_afk_worker) # <<< FIX 2: CONNECTED SIGNAL
         
         self._start_listeners()
 
@@ -970,7 +972,7 @@ class MainWindow(QtWidgets.QMainWindow):
         afk_hotkey = (self.afk_hotkey_edit.text() or "p").lower()
         if pressed_char == afk_hotkey:
             if not (self.worker and self.worker.isRunning()):
-                self.on_toggle_afk_worker()
+                self.sig_toggle_afk.emit() # <<< FIX 3: EMIT SIGNAL INSTEAD OF DIRECT CALL
             return
 
         # Check for AutoClicker hotkey press.
