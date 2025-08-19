@@ -52,7 +52,7 @@ The program requires **Python 3** to be installed.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git](https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git)
+    git clone [https://github.com/Piotrunius/AutoClicker-AntiAFK.git]
     cd YOUR_REPOSITORY_NAME
     ```
 
