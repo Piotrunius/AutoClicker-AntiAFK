@@ -7,7 +7,6 @@
 An advanced and fully customizable AutoClicker and Anti-AFK tool, designed for gamers and task automation. The application features a modern and intuitive user interface with extensive personalization options.
 
 
-*I suggest inserting a screenshot of the main application window here.*
 
 ## 📜 Features
 
