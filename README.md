@@ -74,3 +74,8 @@ This project is licensed under the **MIT License**. This means you are free to u
 ---
 
 Made with ❤️ by [Piotrunius](https://e-z.bio/piotrunius) © 2025
+<img width="579" height="466" alt="Zrzut ekranu 2025-08-19 185443" src="https://github.com/user-attachments/assets/157dd58a-38c1-4a4e-9d70-88168fe7c49f" />
+<img width="578" height="324" alt="Zrzut ekranu 2025-08-19 185430" src="https://github.com/user-attachments/assets/e140fa5b-b6e1-44ac-8297-8034ca060f72" />
+<img width="578" height="140" alt="Zrzut ekranu 2025-08-19 185403" src="https://github.com/user-attachments/assets/53d5b6d6-7d16-4563-949f-71be23170c0a" />
+<img width="581" height="173" alt="Zrzut ekranu 2025-08-19 185350" src="https://github.com/user-attachments/assets/63a85656-eb7b-49b8-b765-649ca5bb2e90" />
+<img width="594" height="649" alt="Zrzut ekranu 2025-08-19 185335" src="https://github.com/user-attachments/assets/2c9f4807-d3d0-47dd-a22e-f566378e2a13" />
