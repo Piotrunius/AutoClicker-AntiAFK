@@ -1,6 +1,6 @@
 # Piotrunius AutoClicker & More
 
-![Version](https://img.shields.io/badge/version-1.0-blue.svg)
+![Version]([https://img.shields.io/badge/version-1.0-blue.svg](https://img.shields.io/github/v/tag/Piotrunius/AutoClicker-AntiAFK))
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 ![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
 
