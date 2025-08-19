@@ -49,14 +49,7 @@ The application consists of three main modules: AutoClicker, Anti-AFK, and Setti
 ## 🚀 Installation
 
 The program requires **Python 3** to be installed.
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/Piotrunius/AutoClicker-AntiAFK.git]
-    cd YOUR_REPOSITORY_NAME
-    ```
-
-2.  **Install the required libraries:**
+1.  **Install the required libraries:**
     It is recommended to create a virtual environment. Then, install the packages using `pip`:
     ```bash
     pip install PyQt6 pynput pygetwindow
