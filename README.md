@@ -53,7 +53,7 @@ The application consists of three main modules: AutoClicker, Anti-AFK, and Setti
 
 The program requires **Python 3** to be installed.
 1.  **Install the required libraries:**
-    It is recommended to create a virtual environment. Then, install the packages using `pip`:
+    It is recommended to create a virtual environment. Then, install the packages using:
     ```bash
     pip install PyQt6 pynput pygetwindow
     ```
