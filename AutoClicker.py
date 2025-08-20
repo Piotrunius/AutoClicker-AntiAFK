@@ -157,7 +157,6 @@ TRANSLATIONS = {
         'limit_window_check': "Restrict actions to game window",
         'window_title_placeholder': "Window title (e.g. Minecraft)",
         'always_on_top_check': "Always on Top",
-        'minimize_to_tray_check': "Minimize to System Tray",
         'accent_color_label': "Accent Color:",
         'change_color_button': "Change",
         'reset_settings_label': "Reset all settings:",
@@ -298,7 +297,6 @@ TRANSLATIONS = {
         'limit_window_check': "Ogranicz akcje do okna gry",
         'window_title_placeholder': "Tytuł okna (np. Minecraft)",
         'always_on_top_check': "Zawsze na wierzchu",
-        'minimize_to_tray_check': "Minimalizuj do paska zadań",
         'accent_color_label': "Kolor Akcentu:",
         'change_color_button': "Zmień",
         'reset_settings_label': "Zresetuj ustawienia:",
@@ -649,7 +647,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.is_recording = False
         self.recorded_sequence = []
         self.last_click_time = 0
-        self.tray_icon = None
 
         # --- Load Settings & Theming ---
         self.settings = load_settings()
@@ -659,7 +656,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # --- UI and Listener Setup ---
         self._build_ui()
-        self._setup_tray_icon()
         self._load_profiles_to_ui()
         self._load_active_profile_to_ui()
         self._update_theme()
@@ -1045,8 +1041,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.always_on_top_checkbox = QtWidgets.QCheckBox()
         self.always_on_top_checkbox.toggled.connect(self._set_always_on_top)
         settings_layout.addRow(self.always_on_top_checkbox)
-        self.minimize_to_tray_checkbox = QtWidgets.QCheckBox()
-        settings_layout.addRow(self.minimize_to_tray_checkbox)
 
         color_layout = QtWidgets.QHBoxLayout()
         self.color_swatch = QtWidgets.QLabel(); self.color_swatch.setFixedSize(24, 24)
@@ -1139,7 +1133,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     # Connects all relevant UI widget signals to the save function.
     def _connect_signals_for_saving(self):
-        autoclicker_widgets = [self.lmb_box.widgets['slider'], self.lmb_box.widgets['variation'], self.lmb_box.widgets['jitter'], self.lmb_box.widgets['click_type'], self.rmb_box.widgets['slider'], self.rmb_box.widgets['variation'], self.rmb_box.widgets['jitter'], self.rmb_box.widgets['click_type'], self.activation_key_edit, self.start_delay_spin, self.click_limit_spin, self.limit_window_check, self.window_title_edit, self.always_on_top_checkbox, self.minimize_to_tray_checkbox, self.hold_mode_radio, self.toggle_mode_radio, self.burst_mode_radio, self.toggle_lmb_radio, self.toggle_rmb_radio, self.burst_clicks_spin, self.burst_delay_spin, self.fixed_pos_check, self.fixed_pos_x_spin, self.fixed_pos_y_spin, self.playback_reps_spin]
+        autoclicker_widgets = [self.lmb_box.widgets['slider'], self.lmb_box.widgets['variation'], self.lmb_box.widgets['jitter'], self.lmb_box.widgets['click_type'], self.rmb_box.widgets['slider'], self.rmb_box.widgets['variation'], self.rmb_box.widgets['jitter'], self.rmb_box.widgets['click_type'], self.activation_key_edit, self.start_delay_spin, self.click_limit_spin, self.limit_window_check, self.window_title_edit, self.always_on_top_checkbox, self.hold_mode_radio, self.toggle_mode_radio, self.burst_mode_radio, self.toggle_lmb_radio, self.toggle_rmb_radio, self.burst_clicks_spin, self.burst_delay_spin, self.fixed_pos_check, self.fixed_pos_x_spin, self.fixed_pos_y_spin, self.playback_reps_spin]
         antiafk_widgets = [self.afk_min_interval_spin, self.afk_max_interval_spin, self.afk_move_mouse_check, self.afk_use_human_moves_check, self.afk_human_move_mode_combo, self.afk_human_move_duration_spin, self.afk_mouse_range_spin, self.afk_return_to_start_check, self.afk_click_mouse_check, self.afk_scroll_mouse_check, self.afk_press_keys_check, self.afk_key_w, self.afk_key_a, self.afk_key_s, self.afk_key_d, self.afk_key_space, self.afk_custom_keys_edit, self.afk_hotkey_edit]
         settings_widgets = [self.emergency_key_edit, self.autoclicker_enabled_check, self.afk_enabled_check]
         all_widgets = autoclicker_widgets + antiafk_widgets + settings_widgets
@@ -1185,7 +1179,7 @@ class MainWindow(QtWidgets.QMainWindow):
             "use_fixed_pos": self.fixed_pos_check.isChecked(), "fixed_x": self.fixed_pos_x_spin.value(), "fixed_y": self.fixed_pos_y_spin.value(),
             "click_limit": self.click_limit_spin.value(),
             "limit_window": self.limit_window_check.isChecked(), "window_title": self.window_title_edit.text(), "activation_key": self.activation_key_edit.text(),
-            "start_delay": self.start_delay_spin.value(), "always_on_top": self.always_on_top_checkbox.isChecked(), "minimize_to_tray": self.minimize_to_tray_checkbox.isChecked(),
+            "start_delay": self.start_delay_spin.value(), "always_on_top": self.always_on_top_checkbox.isChecked(),
             "accent_color": self.accent_color.name(),
             "language": self.current_language,
             "theme": self.current_theme,
@@ -1219,7 +1213,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.fixed_pos_check.setChecked(s.get("use_fixed_pos", False)); self.fixed_pos_x_spin.setValue(s.get("fixed_x", 0)); self.fixed_pos_y_spin.setValue(s.get("fixed_y", 0))
         self.click_limit_spin.setValue(s.get("click_limit", 0))
         self.limit_window_check.setChecked(s.get("limit_window", False)); self.window_title_edit.setText(s.get("window_title", "Minecraft"))
-        self.activation_key_edit.setText(s.get("activation_key") or "r"); self.start_delay_spin.setValue(s.get("start_delay", 0.0)); self.always_on_top_checkbox.setChecked(s.get("always_on_top", False)); self.minimize_to_tray_checkbox.setChecked(s.get("minimize_to_tray", False))
+        self.activation_key_edit.setText(s.get("activation_key") or "r"); self.start_delay_spin.setValue(s.get("start_delay", 0.0)); self.always_on_top_checkbox.setChecked(s.get("always_on_top", False));
         self.playback_reps_spin.setValue(s.get("playback_reps", 0))
 
         # --- Load General Settings ---
@@ -1816,7 +1810,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.emergency_key_edit.setPlaceholderText(self._tr('emergency_key_placeholder'))
         self.limit_window_check.setText(self._tr('limit_window_check')); self.window_title_edit.setPlaceholderText(self._tr('window_title_placeholder'))
         self.always_on_top_checkbox.setText(self._tr('always_on_top_check'))
-        self.minimize_to_tray_checkbox.setText(self._tr('minimize_to_tray_check'))
         self.accent_color_label.setText(self._tr('accent_color_label')); self.change_color_button.setText(self._tr('change_color_button'))
         self.reset_settings_label.setText(self._tr('reset_settings_label'))
         self.reset_settings_button.setText(self._tr('reset_settings_button'))
@@ -1901,40 +1894,14 @@ class MainWindow(QtWidgets.QMainWindow):
     # =====================================================================
     # Application Lifecycle
     # =====================================================================
-    def _setup_tray_icon(self):
-        self.tray_icon = QtWidgets.QSystemTrayIcon(self)
-        self.tray_icon.setIcon(self.style().standardIcon(QStyle.StandardPixmap.SP_ComputerIcon))
-
-        show_action = QAction("Show", self)
-        quit_action = QAction("Quit", self)
-        show_action.triggered.connect(self.showNormal)
-        quit_action.triggered.connect(QtWidgets.QApplication.quit)
-
-        tray_menu = QMenu()
-        tray_menu.addAction(show_action)
-        tray_menu.addAction(quit_action)
-        self.tray_icon.setContextMenu(tray_menu)
-        self.tray_icon.activated.connect(self._on_tray_icon_activated)
-
-    def _on_tray_icon_activated(self, reason):
-        if reason == QtWidgets.QSystemTrayIcon.ActivationReason.Trigger:
-            self.showNormal()
-            self.activateWindow()
-
-    def changeEvent(self, event):
-        if event.type() == QtCore.QEvent.Type.WindowStateChange:
-            if self.isMinimized() and self.minimize_to_tray_checkbox.isChecked():
-                self.hide(); self.tray_icon.show(); event.ignore()
-            else: super().changeEvent(event)
-        else: super().changeEvent(event)
 
     def closeEvent(self, event):
         if self.worker: self.worker.stop()
         if self.afk_worker: self.afk_worker.stop()
         if self.playback_worker: self.playback_worker.stop()
         self.mouse_listener.stop(); self.keyboard_listener.stop()
-        if self.tray_icon: self.tray_icon.hide()
         event.accept()
+        QtWidgets.QApplication.quit() # Ensure the application exits cleanly
 
     def _verify_integrity(self):
         if "Piotrunius" not in self.copyright_label.text():
@@ -1947,7 +1914,7 @@ class MainWindow(QtWidgets.QMainWindow):
 # ==================================================================================================
 def main():
     app = QtWidgets.QApplication(sys.argv)
-    app.setQuitOnLastWindowClosed(False)
+    app.setQuitOnLastWindowClosed(True)
     mw = MainWindow()
     mw.show()
     sys.exit(app.exec())
